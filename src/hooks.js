@@ -53,7 +53,7 @@ export function getCanvas(props, canvasRef) {
 }
 
 export function usePixiAppCreator(props) {
-  const { app } = props;
+  const { app, createApp } = props;
 
   invariant(app == null || app instanceof PIXI.Application, "Provided `app` has to be an instance of PIXI.Application");
 
@@ -66,7 +66,8 @@ export function usePixiAppCreator(props) {
   useLayoutEffect(() => {
     const unmount = createUnmount(ReactPixiFiberAsSecondaryRenderer);
     const view = canvasRef.current;
-    const appInstance = app || createPixiApplication({ height, width, view, ...options });
+    const createPixiApp = createApp || createPixiApplication;
+    const appInstance = app || createPixiApp({ height, width, view, ...options });
 
     setAppInstance(appInstance);
 
